@@ -1,4 +1,4 @@
-# Quay.io image publication
+# Quay.io image publication [![wercker status](https://app.wercker.com/status/721109547b886fa42222b0b0ebb1e862/s/master "wercker status")](https://app.wercker.com/project/bykey/721109547b886fa42222b0b0ebb1e862)
 
 Using this step, you can publish a new tag, based on an existing tag in Quay.
 This can be used to link a non-latest tag to latest at deploy time.
