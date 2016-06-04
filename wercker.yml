@@ -2,8 +2,6 @@ box: wercker/default
 
 build:
   steps:
-    - install-packages:
-        packages: curl
     - shellcheck:
         files: run.sh
     - script:
