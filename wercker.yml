@@ -1,0 +1,31 @@
+box: wercker/default
+
+build:
+  steps:
+    - install-packages:
+        packages: curl
+    - shellcheck:
+        files: run.sh
+    - script:
+        name: test run.sh
+        code: |
+          export WERCKER_PUBLISH_QUAY_TAG_REPOSITORY=blendle/true
+          export WERCKER_PUBLISH_QUAY_TAG_CURRENT=other
+          export WERCKER_PUBLISH_QUAY_TAG_TAG=test1
+
+          $WERCKER_ROOT/run.sh
+
+          export WERCKER_PUBLISH_QUAY_TAG_IF=this
+          export WERCKER_PUBLISH_QUAY_TAG_EQ=this
+          export WERCKER_PUBLISH_QUAY_TAG_TAG=test2
+
+          $WERCKER_ROOT/run.sh
+
+          export WERCKER_PUBLISH_QUAY_TAG_IF=this
+          export WERCKER_PUBLISH_QUAY_TAG_EQ=that
+          export WERCKER_PUBLISH_QUAY_TAG_TAG=test3
+
+          $WERCKER_ROOT/run.sh
+    - script:
+        name: prepare output
+        code: rm -rf $WERCKER_ROOT/.git

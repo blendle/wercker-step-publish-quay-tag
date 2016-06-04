@@ -1,0 +1,27 @@
+name: publish-quay-tag
+version: 0.1.0
+description: Publish new image tag based on existing Quay tag
+keywords:
+- quay
+- quay.io
+- docker
+- deploy
+properties:
+  repository:
+    type: string
+    required: true
+  token:
+    type: string
+    required: true
+  current:
+    type: string
+    required: false
+  tag:
+    type: string
+    required: false
+  if:
+    type: string
+    required: false
+  eq:
+    type: string
+    required: false
