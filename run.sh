@@ -10,7 +10,7 @@ main() {
   fi
 
   if [ "$WERCKER_PUBLISH_QUAY_TAG_IF" != "$WERCKER_PUBLISH_QUAY_TAG_EQ" ]; then
-    printf "%b%b%b\n" "[37m[1m" "$WERCKER_PUBLISH_QUAY_TAG_IF did not match $WERCKER_PUBLISH_QUAY_TAG_EQ, skipping step..." "[m"
+    info "$WERCKER_PUBLISH_QUAY_TAG_IF did not match $WERCKER_PUBLISH_QUAY_TAG_EQ, skipping step..."
   else
     imageID=$(curl --silent --header "Authorization: Bearer $WERCKER_PUBLISH_QUAY_TAG_TOKEN" "https://quay.io/api/v1/repository/$WERCKER_PUBLISH_QUAY_TAG_REPOSITORY/tag/$WERCKER_PUBLISH_QUAY_TAG_CURRENT/images" | awk -F'"id": "' '{print $2}' | awk -F'"' '{print $1}')
 
@@ -22,6 +22,18 @@ main() {
   fi
 }
 
-curl_with_flags() { curl --fail --silent --output /dev/null --request PUT "$@"; }
+info() {
+  printf "%b%b%b\n" "\e[1;37m" "$1" "\e[m"
+}
+
+fail() {
+  printf "%b%b%b\n" "\e[1;31m" "failed: $1" "\e[m"
+  echo "$1" > "$WERCKER_REPORT_MESSAGE_FILE"
+  exit 1
+}
+
+curl_with_flags() {
+  curl --fail --silent --output /dev/null --request PUT "$@"
+}
 
 main
